@@ -160,11 +160,19 @@ controllers.controller('messageListCtrl', function ($scope) {
 
       // For every message in the data results, get the message
       // instance and set isRead to true (side-effects notify server its read)
-      data.map(function(item) {
-        return $scope.appCtrlState.client.getMessage(item.id);
-      }).forEach(function(m) {
-        m.isRead = true;
-      });
+      // Wait 2 seconds before doing this and verify that its still being rendered
+      // before proceding.
+      setTimeout(function() {
+          data.map(function(item) {
+            return $scope.appCtrlState.client.getMessage(item.id);
+          }).forEach(function(m) {
+            if ($scope.query.data.filter(function(item) {
+                return item.id === m.id;
+            }).length) {
+                m.isRead = true;
+            }
+          });
+      }, 2000);
 
       // After a short delay, reenable paging
       window.setTimeout(function() {
@@ -190,6 +198,22 @@ controllers.controller('messageListCtrl', function ($scope) {
   });
 
   /**
+   * nextPage() is called by the infinite scroller each
+   * time it wants another page of messages from the server
+   * to render.
+   */
+  $scope.nextPage = function() {
+    if (!$scope.query.isFiring) {
+      $scope.query.update({
+        paginationWindow: $scope.query.paginationWindow + 30
+      });
+    }
+  };
+});
+
+controllers.controller('messageListItemCtrl', function ($scope) {
+
+  /**
    * Get initials from sender
    *
    * @method
@@ -197,7 +221,7 @@ controllers.controller('messageListCtrl', function ($scope) {
    * @return {string} - User's display name
    */
   $scope.getSenderInitials = function(message) {
-    var name = message.sender.userId || 'Unknown';
+    var name = message.sender.userId || '';
     return name.substr(0, 2).toUpperCase();
   };
 
@@ -233,18 +257,5 @@ controllers.controller('messageListCtrl', function ($scope) {
    */
   $scope.getMessageDate = function(message) {
     return window.layerSample.dateFormat(message.sentAt);
-  };
-
-  /**
-   * nextPage() is called by the infinite scroller each
-   * time it wants another page of messages from the server
-   * to render.
-   */
-  $scope.nextPage = function() {
-    if (!$scope.query.isFiring) {
-      $scope.query.update({
-        paginationWindow: $scope.query.paginationWindow + 30
-      });
-    }
   };
 });

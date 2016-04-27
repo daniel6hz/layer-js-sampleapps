@@ -1,0 +1,5 @@
+<div class='message-list' ng-controller="messageListCtrl"
+    infinite-scroll="nextPage()" infinite-scroll-distance='2'>
+  <img ng-hide="chatCtrlState.currentConversation" class="layer-logo" src="http://static.layer.com/logo-only-black.svg" />
+  <div ng-include="'partials/message-item.html'" />
+</div>

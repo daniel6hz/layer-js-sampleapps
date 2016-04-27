@@ -17,5 +17,12 @@
       <div ng-include="'partials/new-conversation-panel.html'"
            ng-show="chatCtrlState.showUserList"></div>
     </div>
+    <div
+      class="announcements-dialog"
+      ng-show="chatCtrlState.showAnnouncements"
+      ng-controller="announcementDialogCtrl">
+      <div ng-include="'partials/announcement-list.html'"
+           ng-hide="chatCtrlState.showUserList"></div>
+    </div>
   </div>
 </div>

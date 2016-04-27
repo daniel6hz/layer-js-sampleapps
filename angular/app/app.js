@@ -5,6 +5,7 @@ var app = angular.module('ChatApp', [
   'sampleAppControllers',
   'conversationPanelControllers',
   'newConversationPanelControllers',
+  'announcementControllers',
   'infinite-scroll',
   'ngRoute'
 ]);

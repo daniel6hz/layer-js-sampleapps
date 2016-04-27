@@ -18,25 +18,8 @@
     </div>
   </div>
 
-  <div class='message-list' ng-controller="messageListCtrl"
-      ng-hide="chatCtrlState.showUserList"
-      infinite-scroll="nextPage()" infinite-scroll-distance='2' >
-    <img ng-hide="chatCtrlState.currentConversation" class="layer-logo" src="http://static.layer.com/logo-only-black.svg" />
-    <div class="message-item" ng-repeat="message in data">
-      <div class="avatar">{{getSenderInitials(message)}}</div>
-      <div class="message-content">
-        <span class='name'>{{message.sender.userId}}</span>
-        <div class="message-parts">
-          <div class="bubble text">
-            {{message.parts[0].body}}
-          </div>
-        </div>
-      </div>
-      <div class="timestamp">
-        {{getMessageDate(message)}}
-        <span class='message-status'>{{getMessageStatus(message)}}</span>
-      </div>
-    </div>
+  <div class="conversation-panel-message-list" ng-include="'partials/message-list.html'"
+      ng-hide="chatCtrlState.showUserList" >
   </div>
 
   <div class='typing-indicator-panel' ng-hide="chatCtrlState.showUserList" ng-controller='typingIndicatorCtrl'>

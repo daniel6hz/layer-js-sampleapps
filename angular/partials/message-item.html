@@ -1,0 +1,17 @@
+<div class="message-item"
+     ng-controller="messageListItemCtrl"
+     ng-repeat="message in data">
+  <div class="avatar">{{getSenderInitials(message)}}</div>
+  <div class="message-content">
+    <span class='name'>{{message.sender.userId || message.sender.name}}</span>
+    <div class="message-parts">
+      <div class="bubble text">
+        {{message.parts[0].body}}
+      </div>
+    </div>
+  </div>
+  <div class="timestamp">
+    {{getMessageDate(message)}}
+    <span class='message-status'>{{getMessageStatus(message)}}</span>
+  </div>
+</div>
