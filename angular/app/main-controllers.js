@@ -42,7 +42,7 @@ sampleControllers.controller('appCtrl', function ($scope) {
     /**
      * Initialize Layer Client with `appId`
      */
-    $scope.appCtrlState.client = new layer.Client({
+    window.client = $scope.appCtrlState.client = new layer.Client({
       appId: window.layerSample.appId
     });
 
@@ -75,7 +75,7 @@ sampleControllers.controller('appCtrl', function ($scope) {
  * 2. All routing (current conversation or new conversation)
  */
 sampleControllers.controller('chatCtrl', function ($scope, $route, $location) {
-  $scope.chatCtrlState = {
+  window.tmp = $scope.chatCtrlState = {
     showUserList: false,
     showAnnouncements: false,
     unreadAnnouncements: 0,
