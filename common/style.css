@@ -315,8 +315,10 @@ body {
   color: rgba(0,0,0,0.5);
 }
 .panel-header .icon {
+  cursor: pointer;
   font-size: 18px;
   padding: 6px 4px 4px 6px;
+  margin-left: 6px;
   color: #fff;
   border: 1px solid rgba(255,255,255,.4);
   border-radius: 6px;
@@ -397,10 +399,20 @@ body {
 }
 
 .conversation-panel-message-list {
+  height: 100px; // Flexbox workaround
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .participant-picker {
@@ -696,7 +708,6 @@ body {
   width: 60%;
   height: 60%;
   border: solid 2px #777;
-  border-radius: 6px;
   background-color: white;
 
   display: flex;
