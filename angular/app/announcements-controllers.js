@@ -78,6 +78,13 @@ controllers.controller('announcementListCtrl', function($scope, $rootScope) {
     }
   });
 
+  $scope.$watch('chatCtrlState.showAnnouncements', function(newValue) {
+    if (newValue) {
+        // Force ng-infinite-scroll to do its thing
+        $scope.data = $scope.data.concat([]);
+    }
+  });
+
   /**
    * nextPage() is called by the infinite scroller each
    * time it wants another page of messages from the server
