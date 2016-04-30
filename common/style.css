@@ -549,7 +549,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   border-radius: 16px;
-  background-color: #19A5E4;
+  background-color: rgba(25, 165, 228, 1.0);
   overflow: hidden;
   margin: 1px 0;
   max-width: 100%;
@@ -560,6 +560,28 @@ body {
   line-height: 1.4;
   color: #fff;
 }
+
+.message-item .bubble.quote {
+  padding: 8px 24px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #fff;
+  font-style: italic;
+  background-color: rgba(25, 165, 228, 0.5);
+  border: solid rgba(25, 165, 228, 1.0) 2px;
+  color: black;
+}
+
+.message-item .bubble.quote:before {
+  content: open-quote;
+  margin-right: 10px;
+}
+
+.message-item .bubble.quote:after {
+  content: close-quote;
+  margin-left: 10px;
+}
+
 .message-item .avatar {
   -webkit-align-self: flex-end;
       -ms-flex-item-align: end;
@@ -674,6 +696,10 @@ body {
   opacity: 1;
 }
 
+.unread-announcements .fa {
+  color: red;
+}
+
 .announcements-dialog {
   position: absolute;
   top: 0px;
@@ -704,7 +730,7 @@ body {
           justify-content: center;
 }
 
-.announcements-dialog div .message-list-container {
+.announcements-dialog div .announcement-list-container {
   width: 60%;
   height: 60%;
   border: solid 2px #777;
@@ -727,4 +753,67 @@ body {
   -webkit-justify-content: stretch;
       -ms-flex-pack: stretch;
           justify-content: stretch;
+}
+
+.announcement-list {
+  overflow-y: auto;
+}
+
+
+.announcement-item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  border-bottom: solid 1px #ccc;
+}
+
+.announcement-item:last-child {
+  border-bottom: solid 1px transparent;
+}
+
+.announcement-item.is-unread {
+  font-weight: bold;
+}
+
+.announcement-item.is-read {
+  color: #666;
+}
+
+.announcement-item .unread-bullet {
+  padding: 10px;
+  width: 40px;
+}
+
+
+.announcement-item .name {
+  padding: 10px 20px;
+  font-weight: bold;
+  width: 120px;
+}
+
+.announcement-item .announcement-parts {
+  padding: 10px 20px;
+  width: 100px; // flexbox workaround
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.announcement-item .announcement-parts.closed .text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.announcement-item .timestamp {
+  width: 100px;
+  color: rgba(0,0,0,0.4);
+  font-size: 12px;
+  text-align: right;
+  padding: 10px 20px;
 }

@@ -1,13 +1,11 @@
 <div class="message-item"
      ng-controller="messageListItemCtrl"
-     ng-repeat="message in data">
+     ng-repeat="message in data track by message.id">
   <div class="avatar">{{getSenderInitials(message)}}</div>
   <div class="message-content">
     <span class='name'>{{message.sender.userId || message.sender.name}}</span>
-    <div class="message-parts">
-      <div class="bubble text">
-        {{message.parts[0].body}}
-      </div>
+    <div class="message-parts" ng-repeat="part in message.parts">
+      <div ng-include="'partials/messages/' + getPartTemplate(part)"></div>
     </div>
   </div>
   <div class="timestamp">
