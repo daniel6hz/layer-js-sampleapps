@@ -19,14 +19,15 @@ function handleAction(layerClient, typingPublisher, state, action, next) {
   const { type, payload } = action;
 
   switch(type) {
-    case SUBMIT_COMPOSER_MESSAGE:
+    case SUBMIT_COMPOSER_MESSAGE: {
+      let conversation;
       if (state.router.location.pathname === '/new') {
         const { participants, title } = state.newConversation;
         const { users } = state.app;
         const distinct = title.length === 0;
         const metadataTitle = title || '';
 
-        let conversation = layerClient.createConversation({
+        conversation = layerClient.createConversation({
           distinct,
           participants,
           metadata: {
@@ -40,13 +41,28 @@ function handleAction(layerClient, typingPublisher, state, action, next) {
 
         conversation.createMessage(state.newConversation.composerMessage).send();
       } else {
-        layerClient
-          .getConversation(`layer:///conversations/${state.router.params.conversationId}`, true)
-          .createMessage(state.activeConversation.composerMessage).send();
-
         typingPublisher.setState(FINISHED);
+
+        conversation = layerClient
+          .getConversation(`layer:///conversations/${state.router.params.conversationId}`, true);
       }
+
+      const text = state.newConversation.composerMessage;
+      let message;
+      if (text.indexOf('> ') === 0) {
+        message = conversation.createMessage({
+          parts: [{
+            mimeType: 'text/quote',
+            body: text.substring(2)
+          }]
+        });
+      } else {
+        message = conversation.createMessage(text);
+      }
+      message.send();
+
       return;
+    }
     case SAVE_CONVERSATION_TITLE:
       layerClient
         .getConversation(`layer:///conversations/${state.router.params.conversationId}`, true)

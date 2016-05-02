@@ -5,7 +5,7 @@ import { QueryBuilder } from 'layer-sdk';
 import { connectQuery } from 'layer-react';
 import * as MessengerActions from '../actions/messenger';
 import ConversationHeader from '../components/ConversationHeader';
-import MessageList from '../components/MessageList';
+import MessageList from '../components/messages/MessageList';
 import MessageComposer from '../components/MessageComposer';
 import TypingIndicatorContainer from './TypingIndicatorContainer';
 

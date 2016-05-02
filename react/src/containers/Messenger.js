@@ -6,11 +6,13 @@ import { connectQuery } from 'layer-react';
 import * as MessengerActions from '../actions/messenger';
 import ConversationList from '../components/ConversationList';
 import ConversationListHeader from '../components/ConversationListHeader';
+import AnnouncementsList from '../components/announcements/MessageList';
 
-function mapStateToProps({ app, router }) {
+function mapStateToProps({ app, announcementState, router }) {
   return {
     app,
-    activeConversationId: `layer:///conversations/${router.params.conversationId}`
+    announcementState,
+    activeConversationId: `layer:///conversations/${router.params.conversationId}`,
   };
 }
 
@@ -20,7 +22,8 @@ function mapDispatchToProps(dispatch) {
 
 function getQueries() {
   return {
-    conversations: QueryBuilder.conversations()
+    conversations: QueryBuilder.conversations(),
+    announcements: QueryBuilder.announcements()
   };
 }
 
@@ -31,10 +34,18 @@ function getQueries() {
 @connect(mapStateToProps, mapDispatchToProps)
 @connectQuery({}, getQueries)
 export default class Messenger extends Component {
+  hideAnnouncements = (event) => {
+    const { actions } = this.props;
+    const { hideAnnouncements } = actions;
+    if (event.target.parentNode.className === 'announcements-dialog') {
+      hideAnnouncements();
+    }
+  }
+
   renderMessenger() {
-    const { app, activeConversationId, actions, conversations } = this.props;
+    const { app, activeConversationId, actions, conversations, announcements, announcementState } = this.props;
     const { users } = app;
-    const { newConversation, deleteConversation } = actions;
+    const { newConversation, deleteConversation, showAnnouncements, markMessageRead } = actions;
 
     // Render the left-panel which contains the Conversation List
     // and the right-panel which consists of the child components
@@ -43,6 +54,8 @@ export default class Messenger extends Component {
       <div className='messenger'>
         <div className='left-panel'>
           <ConversationListHeader
+            unreadAnnouncements={Boolean(announcements.filter(item => item.isUnread).length)}
+            onShowAnnouncements={showAnnouncements}
             onNewConversation={newConversation}/>
           <ConversationList
             conversations={conversations}
@@ -54,6 +67,17 @@ export default class Messenger extends Component {
           conversations,
           users
         })}
+        {announcementState.showAnnouncements ?
+          <div
+            onClick={this.hideAnnouncements}
+            className="announcements-dialog">
+              <div>
+                <AnnouncementsList
+                  messages={announcements}
+                  onMarkMessageRead={markMessageRead}/>
+              </div>
+        </div>
+        : <span />}
       </div>
     );
   }

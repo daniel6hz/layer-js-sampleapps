@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import TextMessagePart from './TextMessagePart';
-import Avatar from './Avatar';
+import QuoteMessagePart from './QuoteMessagePart';
+import Avatar from '../Avatar';
 
 /**
  * This Component renders a single Message in a Message List
@@ -52,11 +53,20 @@ export default class MessageListItem extends Component {
 
           <div className='message-parts'>
             {message.parts.map((messagePart) => {
-              return (
-                <TextMessagePart
-                  key={messagePart.id}
-                  messagePart={messagePart}/>
-              )
+              switch(messagePart.mimeType) {
+                case 'text/plain':
+                  return (
+                    <TextMessagePart
+                      key={messagePart.id}
+                      messagePart={messagePart}/>);
+                case 'text/quote':
+                  return (
+                    <QuoteMessagePart
+                      key={messagePart.id}
+                      messagePart={messagePart}/>);
+                default:
+                  return (<div key={messagePart.id} />);
+              }
             })}
           </div>
         </div>

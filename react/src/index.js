@@ -36,6 +36,11 @@ window.addEventListener('message', function(evt) {
   });
 
   /**
+   * Start authentication
+   */
+  client.connect(window.layerSample.userId);
+
+  /**
    * Share the client with the middleware layer
    */
   const store = configureStore(client);

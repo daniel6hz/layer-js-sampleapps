@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import MessageListItem from './MessageListItem';
-import throttledEventListener from '../utils/throttledEventListener';
+import throttledEventListener from '../../utils/throttledEventListener';
 
 /**
  * A Component for rendering a list of Messages.
