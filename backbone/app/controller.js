@@ -97,7 +97,6 @@ module.exports = function(client) {
         announcementsView.render();
         break;
       case 'property':
-        // we can update view on isRead property change here
         break;
     }
 
