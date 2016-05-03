@@ -13,7 +13,14 @@ module.exports = Backbone.View.extend({
     var parts = '';
 
     if (!this.model.isDestroyed) {
+<<<<<<< HEAD
       parts = this.model.parts.map(this.getMessageParts).join('');
+=======
+      this.model.parts.forEach(function(part) {
+        var bubbleType = part.mimeType === 'text/quote' ? 'quote' : 'text';
+        parts += '<div class="bubble ' + bubbleType + '">' + part.body + '</div>';
+      });
+>>>>>>> Mimetype quote updated
 
       this.$el.append('<div class="avatar">' + initial + '</div>' +
                       '<div class="message-content">' +
