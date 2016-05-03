@@ -19,14 +19,28 @@ module.exports = Backbone.View.extend({
     'keypress input': 'inputAction'
   },
   inputAction: function(e) {
+    var text = e.target.value.trim();
+    if (!this.conversation) {
+      this.trigger('conversation:create', text);
+      return;
+    }
+
     this.trigger('typing:started');
 
-    var text = e.target.value.trim();
     if (e.keyCode !== 13 || !text) return true;
     console.log('send: ' + text);
 
-    if (this.conversation) this.conversation.createMessage(text).send();
-    else this.trigger('conversation:create', text);
+    // Example of using custom mime type
+    if (text.indexOf('> ') === 0) {
+      this.conversation.createMessage({
+        parts: [{
+          mimeType: 'text/quote',
+          body: text.substring(2)
+        }]
+      }).send();
+    } else { // Text plain is default
+      this.conversation.createMessage(text).send();
+    }
 
     e.target.value = '';
     this.trigger('typing:finished');

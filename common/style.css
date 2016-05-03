@@ -561,24 +561,21 @@ body {
 }
 
 .message-item .bubble.quote {
-  padding: 8px 24px;
-  font-size: 18px;
-  line-height: 1.6;
+  padding: 8px 12px;
   color: #fff;
   font-style: italic;
-  background-color: rgba(25, 165, 228, 0.5);
-  border: solid rgba(25, 165, 228, 1.0) 2px;
-  color: black;
 }
 
 .message-item .bubble.quote:before {
   content: open-quote;
-  margin-right: 10px;
+  margin-right: 4px;
+  font-weight: bold;
 }
 
 .message-item .bubble.quote:after {
   content: close-quote;
-  margin-left: 10px;
+  margin-left: 4px;
+  font-weight: bold;
 }
 
 .message-item .avatar {

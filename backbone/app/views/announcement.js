@@ -11,12 +11,12 @@ module.exports = Backbone.View.extend({
       return part.body;
     });
 
-    this.$el.append('<div class="unread-bullet '+(this.model.isRead ? '' : 'fa fa-circle')+'"></div>' +
-                    '<div class="name">'+(this.model.sender.userId || this.model.sender.name)+'</div>' +
+    this.$el.append('<div class="unread-bullet ' + (this.model.isRead ? '' : 'fa fa-circle') + '"></div>' +
+                    '<div class="name">' + (this.model.sender.userId || this.model.sender.name) + '</div>' +
                     '<div class="announcement-parts closed">' +
-                      '<div class="bubble text">'+parts+'</div>' +
+                      '<div class="bubble text">' + parts + '</div>' +
                     '</div>' +
-                    '<div class="timestamp">'+window.layerSample.dateFormat(this.model.sentAt)+'</div>');
+                    '<div class="timestamp">' + window.layerSample.dateFormat(this.model.sentAt)+'</div>');
   },
   events: {
     'click': 'clickAnnouncement'

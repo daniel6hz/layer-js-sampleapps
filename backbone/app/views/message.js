@@ -14,7 +14,8 @@ module.exports = Backbone.View.extend({
 
     if (!this.model.isDestroyed) {
       this.model.parts.forEach(function(part) {
-        parts += '<div class="bubble text">' + part.body + '</div>';
+        var bubbleType = part.mimeType === 'text/quote' ? 'quote' : 'text';
+        parts += '<div class="bubble ' + bubbleType + '">' + part.body + '</div>';
       });
 
       this.$el.append('<div class="avatar">' + initial + '</div>' +
