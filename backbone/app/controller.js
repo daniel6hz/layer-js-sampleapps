@@ -9,6 +9,7 @@ var TitlebarView = require('./views/titlebar');
 var SendView = require('./views/send');
 var TypingIndicatorView = require('./views/typingindicator');
 var ParticipanstView = require('./views/participants');
+var AnnouncementsView = require('./views/announcements');
 
 /**
  * Client router
@@ -16,7 +17,8 @@ var ParticipanstView = require('./views/participants');
 var Router = Backbone.Router.extend({
   routes: {
     'conversations/new': 'conversation:new',
-    'conversations/:id': 'conversation:selected'
+    'conversations/:id': 'conversation:selected',
+    'announcements': 'announcements'
   }
 });
 var router = new Router();
@@ -34,19 +36,28 @@ module.exports = function(client) {
   var sendView = new SendView();
   var typingindicatorView = new TypingIndicatorView();
   var participantView = new ParticipanstView();
+  var announcementsView = new AnnouncementsView();
 
   /**
-   * Create the Conversation List Query
+   * Create Conversation List Query
    */
   var conversationQuery = client.createQuery({
     model: layer.Query.Conversation
   });
 
   /**
-   * Create the Message List Query
+   * Create Message List Query
    */
   var messagesQuery = client.createQuery({
     model: layer.Query.Message,
+    paginationWindow: 30
+  });
+
+  /**
+   * Create Announcements Query
+   */
+  var announcementsQuery = client.createQuery({
+    model: layer.Query.Announcement,
     paginationWindow: 30
   });
 
@@ -77,6 +88,24 @@ module.exports = function(client) {
         messagesView.addMessage(e.target);
         break;
     }
+  });
+  announcementsQuery.on('change', function(e) {
+    switch (e.type) {
+      case 'data':
+      case 'insert':
+        announcementsView.announcements = announcementsQuery.data;
+        announcementsView.render();
+        break;
+      case 'property':
+        // TODO: update property change?
+        break;
+    }
+
+    // Mark unread announcements
+    var unread = announcementsQuery.data.filter(function(item) {
+      return !item.isRead;
+    });
+    Backbone.$('.announcements-button').toggleClass('unread-announcements', unread.length > 0);
   });
 
   /**
@@ -172,6 +201,10 @@ module.exports = function(client) {
     titlebarView.newConversation();
     sendView.newConversation();
     participantView.newConversation();
+  });
+
+  router.on('route:announcements', function() {
+    announcementsView.show();
   });
 
   if (window.location.hash) Backbone.history.loadUrl(Backbone.history.fragment);

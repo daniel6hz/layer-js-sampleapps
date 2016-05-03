@@ -18,8 +18,8 @@
   <script src="common/layerSample.js"></script>
 
   <!-- Layer Web SDK -->
-<!--  <script src="//cdn.layer.com/sdk/1.0/layer-websdk.js"></script>-->
-<script src="client.debug.js"></script>
+  <script src='https://s3.amazonaws.com/static.layer.com/sdk/layer-dev.js'></script>
+
   <!-- Backbone build -->
   <script src="bundle.js"></script>
 </head>
@@ -29,6 +29,9 @@
       <div class="left-panel">
         <div class="panel-header conversations-header">
           <div class='title'></div>
+          <a href='#announcements' class="announcements-button" title="Show Announcements">
+            <i class="icon fa fa-bullhorn"></i>
+          </a>
           <a href='#conversations/new' class='create-conversation' title="Create a new conversation">
             <i class="icon fa fa-pencil-square-o"></i>
           </a>
@@ -42,6 +45,16 @@
         <div class='typing-indicator-panel'></div>
         <div class="message-composer">
           <input class="message-textarea" placeholder="Enter a message..."></input>
+        </div>
+      </div>
+      <div class="announcements-dialog hidden">
+        <div>
+          <div class="announcement-list-container">
+            <div class="panel-header">
+              <span class="title">Announcements</span>
+            </div>
+            <div class="announcement-list"></div>
+          </div>
         </div>
       </div>
     </div>

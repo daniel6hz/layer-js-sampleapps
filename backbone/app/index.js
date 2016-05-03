@@ -31,6 +31,11 @@ window.addEventListener('message', function(evt) {
   });
 
   /**
+   * Start authentication
+   */
+  client.connect(window.layerSample.userId);
+
+  /**
    * Client ready. Initialize controller.
    */
   client.once('ready', function() {
@@ -38,5 +43,5 @@ window.addEventListener('message', function(evt) {
   });
 
   // Set conversations title
-  $('.panel-header .title').text(window.layerSample.user + '\'s Conversations');
+  $('.left-panel .panel-header .title').text(window.layerSample.user + '\'s Conversations');
 }, false);
