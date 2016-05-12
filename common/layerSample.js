@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
    * Hardcoded user identities
    */
   var USERS = [
-    'Alice',
-    'Bob',
-    'Robot'
+    {id: 'alice123@layertester.com', 'displayName': 'Alice'},
+    {id: 'BobSnob@layertester.com', 'displayName': 'Bob'},
+    {id: 'hal9000@layertester.com', 'displayName': 'Robot'}
   ];
 
   /**
@@ -23,6 +23,16 @@ document.addEventListener('DOMContentLoaded', function() {
     appId: null,
     users: USERS,
     user: USERS[0],
+    followAll: function(client) {
+      USERS.forEach(function(user) {
+        client.followIdentity(user.id);
+      });
+    },
+    findUser: function(userId) {
+      return USERS.filter(function(user) {
+        return user.id === userId;
+      })[0];
+    },
     challenge: function(nonce, callback) {
       layer.xhr({
         url: 'https://layer-identity-provider.herokuapp.com/identity_tokens',
@@ -35,7 +45,10 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
           nonce: nonce,
           app_id: window.layerSample.appId,
-          user_id: window.layerSample.user
+          user: {
+            id: window.layerSample.user.id,
+            displayName: window.layerSample.user.displayName
+          }
         }
       }, function(res) {
         if (res.success) {
@@ -74,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   for (var i = 0; i < USERS.length; i++) {
     var checked = i === 0 ? 'checked' : '';
-    div.innerHTML += '<label><input type="radio" name="user" value="' + USERS[i] + '" ' + checked + '/>' + USERS[i] + '</label>';
+    div.innerHTML += '<label><input type="radio" name="user" value="' + USERS[i].id + '" ' + checked + '/>' + USERS[i].displayName + '</label>';
   }
 
   var button = document.createElement('button');
@@ -101,7 +114,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var radios = div.getElementsByTagName('input');
     for (var i = 0; i < radios.length; i++) {
       if (radios[i].type === 'radio' && radios[i].checked) {
-        window.layerSample.user = radios[i].value;
+        var value = radios[i].value;
+        window.layerSample.user = USERS.filter(function(user) {
+          return user.id === value;
+        })[0];
         break;
       }
     }
