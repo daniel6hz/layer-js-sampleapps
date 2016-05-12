@@ -12,8 +12,8 @@
       <div class="avatar"></div>
       <div class="info">
         <div class="main">
-          <label for="{{'user-list-' + user}}" class="title">{{user}}</label>
-          <input id="{{'user-list-' + user}}" value={{user}} type='checkbox' name='userList' ng-click='updateTitle()' ng-model='ignored'/>
+          <label for="{{'user-list-' + user.id}}" class="title">{{user.displayName}}</label>
+          <input id="{{'user-list-' + user.id}}" value={{user.id}} type='checkbox' name='userList' ng-click='updateTitle()' ng-model='ignored'/>
         </div>
       </div>
     </div>

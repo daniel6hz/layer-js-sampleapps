@@ -3,7 +3,7 @@
      ng-controller="messageListItemCtrl"
      ng-repeat="message in data track by message.id">
   <div class='unread-bullet {{message.isRead ? "" : "fa fa-circle"}}'></div>
-  <div class='name'>{{message.sender.userId || message.sender.name}}</div>
+  <div class='name'>{{message.sender.displayName}}</div>
   <div class="announcement-parts {{closed ? 'closed' : ''}}" ng-repeat="part in message.parts">
     <div ng-include="'partials/announcements/' + getPartTemplate(part)"></div>
   </div>

@@ -82,7 +82,9 @@ controllers.controller('newConversationCtrl', function($scope) {
    */
   $scope.updateTitle = function() {
     if (!$scope.userChangedTitle) {
-      $scope.newTitle = getSelectedUsers().join(', ').replace(/(.*),(.*?)/, '$1 and$2')
+      $scope.newTitle = getSelectedUsers().map(function(user) {
+        return window.layerSample.findUser(user).displayName;
+      }).join(', ').replace(/(.*),(.*?)/, '$1 and$2')
     }
   };
 });
