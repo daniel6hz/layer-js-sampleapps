@@ -24,9 +24,13 @@ controllers.controller('messageListItemCtrl', function ($scope) {
    * @param  {Object} message - Message object or instance
    * @return {string} - User's display name
    */
-  $scope.getSenderInitials = function(message) {
-    var name = message.sender.userId || '';
-    return name.substr(0, 2).toUpperCase();
+  $scope.getSenderInitials = function(sender) {
+    var parts = sender.displayName.split(' ');
+    if (parts.length > 1) {
+      return (parts[0].substr(0, 1) + parts[1].substr(0, 1)).toUpperCase();
+    } else {
+      return sender.displayName.substr(0, 2).toUpperCase();
+    }
   };
 
   /**

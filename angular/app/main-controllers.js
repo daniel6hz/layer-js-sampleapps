@@ -59,14 +59,14 @@ sampleControllers.controller('appCtrl', function ($scope) {
      * for this sample) and render.
      */
     $scope.appCtrlState.client.on('ready', function() {
-      window.layerSample.followAll($scope.appCtrlState.client);
+      window.layerSample.followAllUsers($scope.appCtrlState.client);
       $scope.appCtrlState.isReady = true;
       $scope.appCtrlState.users = window.layerSample.users;
       $scope.appCtrlState.user = window.layerSample.user;
       $scope.$digest();
     });
 
-    $scope.appCtrlState.client.connect(window.layerSample.user.id);
+    $scope.appCtrlState.client.connect(window.layerSample.user.userId);
   };
 });
 
@@ -143,7 +143,9 @@ sampleControllers.controller('chatCtrl', function ($scope, $route, $location) {
 
       // A join of all participants names is the backup title.
       return conversationObject.participants.map(function(id) {
-        return window.layerSample.findUser(id).displayName;
+        // Any data retrieve by our Identity Query (new-conversation-panel-controller.js)
+        // can be retrieved by calling client.getIdentity(id);
+        return $scope.appCtrlState.client.getIdentity(id).displayName;
       }).join(', ');
     }
     return '';

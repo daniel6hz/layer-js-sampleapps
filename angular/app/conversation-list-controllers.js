@@ -13,7 +13,7 @@ var controllers = angular.module('conversationListControllers', []);
  * Rendering is done by iterating over $scope.query.data
  */
 controllers.controller('conversationListCtrl', function ($scope, $rootScope) {
-  // Once we are authenticated and the User list is loaded, create the query
+  // Once we are authenticated, create the query
   $scope.$watch('appCtrlState.isReady', function(newValue) {
     if (newValue) {
 
@@ -43,7 +43,18 @@ controllers.controller('conversationListCtrl', function ($scope, $rootScope) {
    */
   $scope.getConversationAvatars = function(conversationObject) {
     return conversationObject.participants.map(function(participant) {
-      return participant.substr(0, 2).toUpperCase();
+      var identity = $scope.appCtrlState.client.getIdentity(participant);
+      if (!identity) {
+        identity = {
+          displayName: participant
+        };
+      }
+      var parts = identity.displayName.split(' ');
+      if (parts.length > 1) {
+        return (parts[0].substr(0, 1) + parts[1].substr(0, 1)).toUpperCase();
+      } else {
+        return identity.displayName.substr(0, 2).toUpperCase();
+      }
     });
   };
 
