@@ -8,7 +8,33 @@ var controllers = angular.module('newConversationPanelControllers', []);
  * This consists of a place to edit a title bar, a list of users to select,
  * and a place to enter a first message.
  */
-controllers.controller('newConversationCtrl', function($scope) {
+controllers.controller('newConversationCtrl', function($scope, $rootScope) {
+  var addusername = document.getElementById('addusername');
+  // Once we are authenticated load the User list
+  $scope.$watch('appCtrlState.isReady', function(newValue) {
+    if (newValue) {
+      $scope.users = [];
+
+      // Create the User List query
+      $scope.query = $scope.appCtrlState.client.createQuery({
+        model: layer.Query.Identity,
+        dataType: 'object',
+        paginationWindow: 500
+      });
+
+      $scope.query.on('change', function() {
+        $scope.users = $scope.query.data.filter(function(user) {
+          return user.id !== $scope.appCtrlState.client.user.id;
+        });
+        $scope.users.forEach(function(user) {
+          // displayName is null for any user who has never logged in
+          // and never had the Platform API setup an Identity.
+          if (user.displayName === null) user.displayName = user.userId;
+        });
+        $rootScope.$digest();
+      });
+    }
+  });
 
   /**
    * Hacky DOMish way of getting the selected users
@@ -18,13 +44,14 @@ controllers.controller('newConversationCtrl', function($scope) {
   function getSelectedUsers() {
     var result = Array.prototype.slice.call(document.querySelectorAll('.user-list :checked'))
       .map(function(node) {
-        return node.value;
+        return $scope.appCtrlState.client.getIdentity(node.value);
       });
 
-    // Make sure that the user of this session is part of the list
-    if (result.indexOf($scope.appCtrlState.client.userId) === -1) {
-      result.push($scope.appCtrlState.client.userId);
+    if (addusername.value) {
+      result.push(createUser());
     }
+
+    result.push($scope.appCtrlState.client.user);
     return result;
   }
 
@@ -43,7 +70,9 @@ controllers.controller('newConversationCtrl', function($scope) {
    * to point to that Conversation.
    */
   $scope.send = function() {
-    var participants = getSelectedUsers();
+    var participants = getSelectedUsers().map(function(user) {
+      return user.userId;
+    });
     if (participants.length) {
 
       var metadata = {};
@@ -72,6 +101,40 @@ controllers.controller('newConversationCtrl', function($scope) {
       Array.prototype.slice.call(document.querySelectorAll('.user-list :checked')).forEach(function(input) {
         input.checked = false;
       });
+
+      if (addusername.value) {
+        window.layerSample.rememberUser(createUser());
+      }
+
+      addusername.value = '';
+    }
+  };
+
+  function createUser() {
+    return {
+      displayName: addusername.value,
+      userId: addusername.value.replace(/[^a-zA-Z]/g, ''),
+      id: 'layer:///identities/' + encodeURIComponent(addusername.value.replace(/[^a-zA-Z]/g, ''))
+    };
+  }
+
+  /**
+   * Get initials from user
+   *
+   * @method
+   * @param  {Object} message - Message object or instance
+   * @return {string} - User's display name
+   */
+  $scope.getSenderInitials = function(user) {
+    if (user === null) {
+      if (!addusername.value) return;
+      user = createUser();
+    }
+    var parts = user.displayName.split(' ');
+    if (parts.length > 1) {
+      return (parts[0].substr(0, 1) + parts[1].substr(0, 1)).toUpperCase();
+    } else {
+      return user.displayName.substr(0, 2).toUpperCase();
     }
   };
 
@@ -83,7 +146,7 @@ controllers.controller('newConversationCtrl', function($scope) {
   $scope.updateTitle = function() {
     if (!$scope.userChangedTitle) {
       $scope.newTitle = getSelectedUsers().map(function(user) {
-        return window.layerSample.findUser(user).displayName;
+        return user.displayName;
       }).join(', ').replace(/(.*),(.*?)/, '$1 and$2')
     }
   };
@@ -94,13 +157,6 @@ controllers.controller('newConversationCtrl', function($scope) {
  * for setting up participants for a new conversation.
  */
 controllers.controller('userListCtrl', function($scope) {
-  $scope.users = [];
 
-  // Once the users list has been loaded, grab and store
-  // this data to drive our user list.
-  $scope.$watch('appCtrlState.isReady', function(newValue) {
-    if (newValue) {
-      $scope.users = window.layerSample.users;
-    }
-  });
+
 });

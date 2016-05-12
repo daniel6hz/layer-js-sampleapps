@@ -80,12 +80,24 @@ body {
 }
 #identity input[type="radio"] {
   margin-right: 8px;
+  width: 13px;
 }
 #identity label {
-  display: block;
+  display: flex;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  align-items: center;
+  -webkit-align-items: center;
   padding: 2px 0;
   font-size: 14px;
 }
+
+#identity label #newusername {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+
 #identity button {
   width: 100%;
   margin-top: 30px;
@@ -277,14 +289,7 @@ body {
 .user-list .participant:hover {
   background-color: rgba(0,0,0,0.15);
 }
-.user-list .avatar {
-  height: 50px;
-  width: 50px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
+
 .panel-header {
   background-color: #ebebeb;
   box-sizing: border-box;
@@ -578,7 +583,8 @@ body {
   font-weight: bold;
 }
 
-.message-item .avatar {
+.message-item .avatar,
+.user-list .avatar {
   -webkit-align-self: flex-end;
       -ms-flex-item-align: end;
           align-self: flex-end;
@@ -638,6 +644,9 @@ body {
   -webkit-flex: 1;
       -ms-flex: 1;
           flex: 1;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  width: 150px; // flexbox bug
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
