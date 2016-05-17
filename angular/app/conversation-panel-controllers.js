@@ -127,7 +127,8 @@ controllers.controller('typingIndicatorCtrl', function($scope) {
   $scope.getText = function() {
     var userIds = $scope.typing || [];
     var userNames = userIds.map(function(userId) {
-      return $scope.appCtrlState.client.getIdentity(userId).displayName;
+      var identity = $scope.appCtrlState.client.getIdentity(userId);
+      return identity ? identity.displayName : userId;
     });
 
     if (userNames.length > 0) {

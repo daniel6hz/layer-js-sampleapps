@@ -230,10 +230,6 @@ div.avatar.cluster span:last-child {
   max-width: 100%;
 }
 
-.conversation-list img.avatar {
-
-}
-
 .conversation-list .delete {
   cursor: pointer;
   color: gray;
@@ -559,9 +555,6 @@ div.avatar.cluster span:last-child {
   font-weight: bold;
 }
 
-.message-item img.avatar {
-
-}
 .message-item .name {
   color: rgba(0,0,0,0.4);
   font-size: 12px;

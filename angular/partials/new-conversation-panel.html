@@ -7,7 +7,7 @@
     </div>
   </div>
 
-  <div class='user-list' ng-controller='userListCtrl' ng-show="chatCtrlState.showUserList">
+  <div class='user-list' ng-show="chatCtrlState.showUserList">
     <div class="participant" ng-repeat="user in appCtrlState.users">
       <div class="avatar-image"><img src={{user.avatarUrl}} class="avatar" /></div>
       <div class="info">
