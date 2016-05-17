@@ -9,32 +9,6 @@ var controllers = angular.module('newConversationPanelControllers', []);
  * and a place to enter a first message.
  */
 controllers.controller('newConversationCtrl', function($scope, $rootScope) {
-  var addusername = document.getElementById('addusername');
-  // Once we are authenticated load the User list
-  $scope.$watch('appCtrlState.isReady', function(newValue) {
-    if (newValue) {
-      $scope.users = [];
-
-      // Create the User List query
-      $scope.query = $scope.appCtrlState.client.createQuery({
-        model: layer.Query.Identity,
-        dataType: 'object',
-        paginationWindow: 500
-      });
-
-      $scope.query.on('change', function() {
-        $scope.users = $scope.query.data.filter(function(user) {
-          return user.id !== $scope.appCtrlState.client.user.id;
-        });
-        $scope.users.forEach(function(user) {
-          // displayName is null for any user who has never logged in
-          // and never had the Platform API setup an Identity.
-          if (user.displayName === null) user.displayName = user.userId;
-        });
-        $rootScope.$digest();
-      });
-    }
-  });
 
   /**
    * Hacky DOMish way of getting the selected users
@@ -46,10 +20,6 @@ controllers.controller('newConversationCtrl', function($scope, $rootScope) {
       .map(function(node) {
         return $scope.appCtrlState.client.getIdentity(node.value);
       });
-
-    if (addusername.value) {
-      result.push(createUser());
-    }
 
     result.push($scope.appCtrlState.client.user);
     return result;
@@ -101,22 +71,8 @@ controllers.controller('newConversationCtrl', function($scope, $rootScope) {
       Array.prototype.slice.call(document.querySelectorAll('.user-list :checked')).forEach(function(input) {
         input.checked = false;
       });
-
-      if (addusername.value) {
-        window.layerSample.rememberUser(createUser());
-      }
-
-      addusername.value = '';
     }
   };
-
-  function createUser() {
-    return {
-      displayName: addusername.value,
-      userId: addusername.value.replace(/[^a-zA-Z]/g, ''),
-      id: 'layer:///identities/' + encodeURIComponent(addusername.value.replace(/[^a-zA-Z]/g, ''))
-    };
-  }
 
   /**
    * Get initials from user
@@ -126,10 +82,6 @@ controllers.controller('newConversationCtrl', function($scope, $rootScope) {
    * @return {string} - User's display name
    */
   $scope.getSenderInitials = function(user) {
-    if (user === null) {
-      if (!addusername.value) return;
-      user = createUser();
-    }
     var parts = user.displayName.split(' ');
     if (parts.length > 1) {
       return (parts[0].substr(0, 1) + parts[1].substr(0, 1)).toUpperCase();
