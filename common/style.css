@@ -151,12 +151,12 @@ body {
 .timestamp {
   color: rgba(0,0,0,0.54);
 }
+
 div.avatar-image {
   border-radius: 50%;
   position: relative;
   overflow: hidden;
 }
-
 
 div.avatar-image.cluster {
   border-radius: 0;
@@ -164,6 +164,7 @@ div.avatar-image.cluster {
   width: 40px;
   height: 40px;
 }
+
 div.avatar-image.cluster img {
   width: 75%;
   height: 75%;
@@ -173,6 +174,7 @@ div.avatar-image.cluster > * {
   width: 34px;
   height: 34px;
 }
+
 div.avatar-image.cluster span:last-child {
   margin-left: 33.333%;
   margin-top: 33.333%;

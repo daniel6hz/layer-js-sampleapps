@@ -59,14 +59,28 @@ sampleControllers.controller('appCtrl', function ($scope) {
      * for this sample) and render.
      */
     $scope.appCtrlState.client.on('ready', function() {
-      window.layerSample.followAllUsers($scope.appCtrlState.client);
-      $scope.appCtrlState.isReady = true;
-      $scope.appCtrlState.users = window.layerSample.users;
+      $scope.appCtrlState.users = [];
       $scope.appCtrlState.user = window.layerSample.user;
-      $scope.$digest();
     });
 
-    $scope.appCtrlState.client.connect(window.layerSample.user.userId);
+    // Create the User List query
+    var identityQuery = $scope.appCtrlState.client.createQuery({
+      model: layer.Query.Identity,
+      dataType: 'object',
+      paginationWindow: 500,
+      change: function() {
+        // This will wait to fire until the client "ready" event has triggered;
+        // while not required to wait, we wait until Identities have loaded before we
+        // start rendering the UI
+        $scope.appCtrlState.isReady = true;
+        $scope.appCtrlState.users = identityQuery.data.filter(function(user) {
+          return user.id !== $scope.appCtrlState.client.user.id;
+        });
+        $scope.$digest();
+      }
+    });
+
+    $scope.appCtrlState.client.connect(window.layerSample.userId);
   };
 });
 

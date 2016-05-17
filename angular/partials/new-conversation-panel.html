@@ -8,21 +8,12 @@
   </div>
 
   <div class='user-list' ng-controller='userListCtrl' ng-show="chatCtrlState.showUserList">
-    <div class="participant" ng-repeat="user in users">
-      <div class="avatar">{{getSenderInitials(user)}}</div>
+    <div class="participant" ng-repeat="user in appCtrlState.users">
+      <div class="avatar-image"><img src={{user.avatarUrl}} class="avatar" /></div>
       <div class="info">
         <div class="main">
           <label for="{{'user-list-' + user.id}}" class="title">{{user.displayName}}</label>
           <input id="{{'user-list-' + user.id}}" value={{user.id}} type='checkbox' name='userList' ng-click='updateTitle()' ng-model='ignored'/>
-        </div>
-      </div>
-    </div>
-    <div class="participant">
-      <div class="avatar">{{getSenderInitials(null)}}</div>
-      <div class="info">
-        <div class="main">
-          <label class="title">
-            <input type="text" placeholder="Enter new username here" id="addusername" ng-change="updateTitle()" ng-model="addusername"/></label>
         </div>
       </div>
     </div>

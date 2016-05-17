@@ -125,9 +125,13 @@ controllers.controller('typingIndicatorCtrl', function($scope) {
 
   // Render a typing indicator message
   $scope.getText = function() {
-    var users = $scope.typing;
-    if (users && users.length > 0) {
-      return users.length === 1 ? users[0] + ' is typing' : users.join(', ') + ' are typing';
+    var userIds = $scope.typing || [];
+    var userNames = userIds.map(function(userId) {
+      return $scope.appCtrlState.client.getIdentity(userId).displayName;
+    });
+
+    if (userNames.length > 0) {
+      return userNames.join(', ') + (userNames.length === 1 ? ' is ' : ' are ') + 'typing';
     } else {
       return '';
     }
