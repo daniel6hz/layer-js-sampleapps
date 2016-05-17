@@ -12,7 +12,7 @@ module.exports = Backbone.View.extend({
     });
 
     this.$el.append('<div class="unread-bullet ' + (this.model.isRead ? '' : 'fa fa-circle') + '"></div>' +
-                    '<div class="name">' + (this.model.sender.userId || this.model.sender.name) + '</div>' +
+                    '<div class="name">' + (this.model.sender.displayName) + '</div>' +
                     '<div class="announcement-parts closed">' +
                       '<div class="bubble text">' + parts + '</div>' +
                     '</div>' +

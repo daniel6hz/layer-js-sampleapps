@@ -4,22 +4,30 @@ var Backbone = require('backbone');
 
 module.exports = Backbone.View.extend({
   el: '.user-list',
+  showing: false,
+  users: [],
   newConversation: function() {
+    this.showing = true;
     this.$el.show();
     this.render();
   },
   hide: function() {
+    this.showing = false;
     this.$el.hide();
   },
   render: function() {
+    if (!this.showing) return;
     this.$el.empty();
-     window.layerSample.users.forEach(function(participant) {
-      this.$el.append('<label for="' + participant + '" class="participant">' +
-        '<div class="avatar"><span>' + participant.substr(0, 2).toUpperCase() + '</span></div>' +
+     this.users.forEach(function(user) {
+      this.$el.append(
+        '<label for="' + user.userId + '" class="participant">' +
+          '<div class="avatar-image">' +
+            '<img src="' + user.avatarUrl + '" />' +
+          '</div>' +
           '<div class="info">' +
             '<div class="main">' +
-              '<span class="title">' + participant + '</span>' +
-              '<input id="' + participant + '" type="checkbox" name="userList"/>' +
+              '<span class="title">' + user.displayName + '</span>' +
+              '<input id="' + user.userId + '" type="checkbox" name="userList"/>' +
             '</div>' +
           '</div>' +
         '</label>');

@@ -15,21 +15,28 @@ module.exports = Backbone.View.extend({
     this.$el.empty();
     this.conversations.forEach(function(conversation) {
       var uuid = conversation.id.substr(conversation.id.lastIndexOf('/') + 1); // extract just UUID
-      var title = conversation.metadata.title || conversation.participants;
       var unread = conversation.unreadCount !== 0 ? 'unread-messages ' : '';
+      var participants = conversation.participants;
+      var client = conversation.getClient();
+      var users = participants.map(function(participant) {
+        return client.getIdentity(participant);
+      }).filter(function(user) {
+        return user && user !== client.user;
+      });
+      var title = conversation.metadata.title || users.map(function(user) {
+        return user.displayName;
+      });
 
       var selectedClass = '';
       if (this.conversation && conversation.id === this.conversation.id) selectedClass = 'selected-conversation';
 
-      var avatars = _.reduce(conversation.participants, function(res, user) {
-        if (user === window.layerSample.user) return res;
-        res.push('<span>' + user.substr(0, 2).toUpperCase() + '</span>');
-        return res;
-      }, []);
+      var avatars = users.map(function(user) {
+        return '<span><img src="' + user.avatarUrl + '" /></span>';
+      });
       var cluster = avatars.length > 1 ? 'cluster' : '';
 
       this.$el.append('<a class="participant ' + unread + selectedClass + '" href="#conversations/' + uuid + '">' +
-                        '<div class="avatar ' + cluster + '">' + avatars.join('') + '</div>' +
+                        '<div class="avatar-image ' + cluster + '">' + avatars.join('') + '</div>' +
                         '<div class="info">' +
                           '<div class="main">' +
                             '<span class="title">' + title + '</span>' +
