@@ -6,8 +6,6 @@ module.exports = Backbone.View.extend({
   tagName: 'div',
   className: 'message-item',
   render: function() {
-    var name = this.model.sender.userId || 'Unknown';
-    var initial = name.substr(0, 2).toUpperCase();
 
     var timestamp = window.layerSample.dateFormat(this.model.sentAt);
     var parts = '';
@@ -22,9 +20,9 @@ module.exports = Backbone.View.extend({
       });
 >>>>>>> Mimetype quote updated
 
-      this.$el.append('<div class="avatar">' + initial + '</div>' +
+      this.$el.append('<div class="avatar-image"><img src="' + this.model.sender.avatarUrl + '" /></div>' +
                       '<div class="message-content">' +
-                        '<span class="name">' + name + '</span>' +
+                        '<span class="name">' + this.model.sender.displayName + '</span>' +
                         '<div class="message-parts">' + parts + '</div>' +
                       '</div>' +
                       '<div class="timestamp">' + timestamp +

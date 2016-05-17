@@ -62,6 +62,13 @@ module.exports = function(client) {
   });
 
   /**
+   * Create Identity List Query
+   */
+  var identityQuery = client.createQuery({
+    model: layer.Query.Identity
+  });
+
+  /**
    * Any time a query data changes we should rerender.  Data changes when:
    *
    * * The Query data has loaded from the server
@@ -105,6 +112,10 @@ module.exports = function(client) {
       return !item.isRead;
     });
     Backbone.$('.announcements-button').toggleClass('unread-announcements', unread.length > 0);
+  });
+  identityQuery.on('change', function() {
+    participantView.users = identityQuery.data;
+    participantView.render();
   });
 
   /**
@@ -158,6 +169,7 @@ module.exports = function(client) {
   });
   sendView.on('conversation:create', function(text) {
     // See http://static.layer.com/sdk/docs/#!/api/layer.Conversation
+    debugger;
     var conversation = client.createConversation(newConversation);
     conversation.createMessage(text).send();
 
