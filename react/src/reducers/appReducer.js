@@ -6,8 +6,6 @@ import {
 const initialState = {
   ready: false,
   clientReady: false,
-  usersLoaded: false,
-  users: []
 };
 
 export default function appReducer(state = initialState, action) {
@@ -17,16 +15,10 @@ export default function appReducer(state = initialState, action) {
     case CLIENT_READY:
       return {
         ...state,
-        ready: state.usersLoaded,
+        ready: true,
         clientReady: true
       };
-    case FETCH_USERS_SUCCESS:
-      return {
-        ...state,
-        ready: state.clientReady,
-        usersLoaded: true,
-        users: payload.users
-      };
+
     default:
       return state;
   }

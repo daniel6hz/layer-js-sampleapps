@@ -168,29 +168,29 @@ body {
 .timestamp {
   color: rgba(0,0,0,0.54);
 }
-div.avatar {
+div.avatar-image {
   border-radius: 50%;
   position: relative;
   overflow: hidden;
 }
 
 
-div.avatar.cluster {
+div.avatar-image.cluster {
   border-radius: 0;
   background: none;
   width: 40px;
   height: 40px;
 }
-div.avatar.cluster img {
+div.avatar-image.cluster img {
   width: 75%;
   height: 75%;
 }
-div.avatar.cluster > * {
+div.avatar-image.cluster > * {
   position: absolute;
   width: 34px;
   height: 34px;
 }
-div.avatar.cluster span:last-child {
+div.avatar-image.cluster span:last-child {
   margin-left: 33.333%;
   margin-top: 33.333%;
 }

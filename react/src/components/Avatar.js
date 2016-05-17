@@ -4,19 +4,19 @@ import cx from 'classnames';
 export default class Avatar extends Component {
 
   static propTypes = {
-    user: PropTypes.string,
+    user: PropTypes.object,
     users: PropTypes.array
   }
 
   renderUserItem = (user) => {
-    return <span key={user}>{user.substr(0, 2).toUpperCase()}</span>;
+    return <span key={user.id}><img src={user.avatarUrl} /></span>;
   }
 
   render() {
     const { user, users } = this.props;
     let usersToRender = user ? [user] : users.slice(-2);
     let styles = cx({
-      avatar: true,
+      'avatar-image': true,
       cluster: usersToRender && usersToRender.length > 1
     });
 

@@ -42,14 +42,14 @@ export default class MessageListItem extends Component {
 
   render() {
     const { message, users } = this.props;
-    const user = message.sender.userId;
+    const user = message.sender;
     const messageStatus = this.getMessageStatus(message);
 
     return (
       <div className='message-item'>
         <Avatar user={user}/>
         <div className='main'>
-          <span className='name'>{user}</span>
+          <span className='name'>{user.displayName}</span>
 
           <div className='message-parts'>
             {message.parts.map((messagePart) => {

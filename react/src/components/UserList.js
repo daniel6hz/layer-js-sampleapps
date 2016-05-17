@@ -9,11 +9,11 @@ import UserListItem from './UserListItem';
 export default class UserList extends Component {
   renderUserItem = (user) => {
     const { selectedUsers, onUserSelected, onUserUnselected } = this.props;
-    const selected = selectedUsers.indexOf(user) !== -1;
+    const selected = selectedUsers.indexOf(user.userId) !== -1;
 
     return (
       <UserListItem
-        key={user}
+        key={user.id}
         user={user}
         selected={selected}
         onUserSelected={onUserSelected}
