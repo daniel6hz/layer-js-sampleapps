@@ -8,7 +8,7 @@ var controllers = angular.module('newConversationPanelControllers', []);
  * This consists of a place to edit a title bar, a list of users to select,
  * and a place to enter a first message.
  */
-controllers.controller('newConversationCtrl', function($scope, $rootScope) {
+controllers.controller('newConversationCtrl', function($scope) {
 
   /**
    * Hacky DOMish way of getting the selected users
@@ -40,11 +40,12 @@ controllers.controller('newConversationCtrl', function($scope, $rootScope) {
    * to point to that Conversation.
    */
   $scope.send = function() {
+    // Get the userIds of all selected users
     var participants = getSelectedUsers().map(function(user) {
       return user.userId;
     });
-    if (participants.length) {
 
+    if (participants.length) {
       var metadata = {};
       if ($scope.newTitle) metadata.title = $scope.newTitle;
 
@@ -80,22 +81,6 @@ controllers.controller('newConversationCtrl', function($scope, $rootScope) {
   };
 
   /**
-   * Get initials from user
-   *
-   * @method
-   * @param  {Object} message - Message object or instance
-   * @return {string} - User's display name
-   */
-  $scope.getSenderInitials = function(user) {
-    var parts = user.displayName.split(' ');
-    if (parts.length > 1) {
-      return (parts[0].substr(0, 1) + parts[1].substr(0, 1)).toUpperCase();
-    } else {
-      return user.displayName.substr(0, 2).toUpperCase();
-    }
-  };
-
-  /**
    * Any time the checkbox list of users changes, udpate the
    * title to match.  Don't update the title if the user
    * has changed the title manually.
@@ -107,13 +92,4 @@ controllers.controller('newConversationCtrl', function($scope, $rootScope) {
       }).join(', ').replace(/(.*),(.*?)/, '$1 and$2')
     }
   };
-});
-
-/**
- * The User List Controller manages a list of users with checkboxes next to them
- * for setting up participants for a new conversation.
- */
-controllers.controller('userListCtrl', function($scope) {
-
-
 });

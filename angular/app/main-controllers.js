@@ -69,8 +69,9 @@ sampleControllers.controller('appCtrl', function ($scope) {
       dataType: 'object',
       paginationWindow: 500,
       change: function() {
-        // This will wait to fire until the client "ready" event has triggered;
-        // while not required to wait, we wait until Identities have loaded before we
+        // This query won't run until the client "ready" event has triggered;
+        // and the query's "change" event won't trigger until it runs.
+        // While it is not required to wait, we wait until Identities have loaded before we
         // start rendering the UI
         $scope.appCtrlState.isReady = true;
         $scope.appCtrlState.users = identityQuery.data.filter(function(user) {
@@ -119,10 +120,10 @@ sampleControllers.controller('chatCtrl', function ($scope, $route, $location) {
 
     // If the url matches a Conversation URL, show it.
     if (matches) {
-      if ($scope.appCtrlState.isReady) {
+      if ($scope.appCtrlState.client.isReady) {
         $scope.loadConversation('layer://' + matches[0]);
       } else {
-        $scope.$watch('appCtrlState.isReady', function() {
+        $scope.appCtrlState.client.once('ready', function() {
           $scope.loadConversation('layer://' + matches[0]);
         });
       }
@@ -159,7 +160,8 @@ sampleControllers.controller('chatCtrl', function ($scope, $route, $location) {
       return conversationObject.participants.map(function(id) {
         // Any data retrieve by our Identity Query (new-conversation-panel-controller.js)
         // can be retrieved by calling client.getIdentity(id);
-        return $scope.appCtrlState.client.getIdentity(id).displayName;
+        var identity = $scope.appCtrlState.client.getIdentity(id);
+        return identity ? identity.displayName : id;
       }).join(', ');
     }
     return '';
