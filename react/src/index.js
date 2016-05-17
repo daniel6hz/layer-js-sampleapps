@@ -12,6 +12,7 @@ import { fetchUsersSuccess } from './actions/messenger';
 import { IndexRoute, Route } from 'react-router';
 import { ReduxRouter } from 'redux-router';
 
+var client;
 /**
  * Wait for identity dialog message to complete
  */
@@ -21,9 +22,11 @@ window.addEventListener('message', function(evt) {
   /**
    * Initialize Layer Client with `appId`
    */
-  const client = new Client({
-    appId: window.layerSample.appId
-  });
+  if (!client) {
+    client = new Client({
+      appId: window.layerSample.appId
+    });
+  }
 
   /**
    * Client authentication challenge.
@@ -48,7 +51,16 @@ window.addEventListener('message', function(evt) {
   /**
    * Bootstrap users
    */
-  store.dispatch(fetchUsersSuccess(window.layerSample.users));
+  var identityQuery = client.createQuery({
+    model: layer.Query.Identity,
+    dataType: layer.Query.ObjectDataType,
+    change: function(evt) {
+      var data = identityQuery.data.filter(function(identity) {
+        return identity.userId != client.userId;
+      });
+      store.dispatch(fetchUsersSuccess(data));
+    }
+  });
 
   // Render the UI wrapped in a LayerProvider
   render(

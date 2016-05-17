@@ -5,6 +5,8 @@ import * as MessengerActions from '../actions/messenger';
 import ConversationHeader from '../components/ConversationHeader';
 import UserList from '../components/UserList';
 import MessageComposer from '../components/MessageComposer';
+import { QueryBuilder } from 'layer-sdk';
+import { connectQuery } from 'layer-react';
 
 function mapStateToProps({ newConversation }) {
   return { newConversation };
@@ -14,7 +16,14 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(MessengerActions, dispatch) };
 }
 
+function getQueries({ activeConversationId, messagePagination }) {
+  return {
+    users: QueryBuilder.identities()
+  };
+}
+
 @connectRedux(mapStateToProps, mapDispatchToProps)
+@connectQuery({}, getQueries)
 export default class NewConversation extends Component {
   render() {
     const { newConversation, users, actions } = this.props;

@@ -39,7 +39,7 @@ export default class MessageListItem extends Component {
     return (
       <div className={"announcement-item " + (message.isRead ? "is-read" : "is-unread")} onClick={this.showItem}>
         <div className={"unread-bullet " + (message.isRead ? "" : "fa fa-circle")}/>
-        <div className='name'>{message.sender.name}</div>
+        <div className='name'>{message.sender.displayName}</div>
 
         <div className={"announcement-parts " + (this.state.closed ? "closed" : "")}>
           {message.parts.map((messagePart) => {

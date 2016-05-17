@@ -8,7 +8,7 @@ import Avatar from './Avatar';
  */
 export default class UserListItem extends Component {
   handleClick = () => {
-    const userId = this.props.user;
+    const userId = this.props.user.userId;
 
     if (this.props.selected) {
       this.props.onUserUnselected(userId);
@@ -24,7 +24,7 @@ export default class UserListItem extends Component {
         <Avatar user={user}/>
         <div className='info'>
           <div className='main'>
-            <label className='title'>{user}</label>
+            <label className='title'>{user.displayName}</label>
             <input type='checkbox' checked={selected}/>
           </div>
         </div>
