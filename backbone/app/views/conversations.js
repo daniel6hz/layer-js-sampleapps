@@ -21,7 +21,7 @@ module.exports = Backbone.View.extend({
       var users = participants.map(function(participant) {
         return client.getIdentity(participant);
       }).filter(function(user) {
-        return user && user !== client.user;
+        return user;
       });
       var title = conversation.metadata.title || users.map(function(user) {
         return user.displayName;

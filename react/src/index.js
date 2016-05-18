@@ -49,16 +49,18 @@ window.addEventListener('message', function(evt) {
   const store = configureStore(client);
 
   /**
-   * Bootstrap users
+   * Run a quick query to verify that this app is correctly setup
+   * for running this sample app.  This Query is not used for
+   * anything else.  Note that we do query for Identities properly
+   * in Messenger.js using `QueryBuilder.identities()`
    */
   var identityQuery = client.createQuery({
     model: layer.Query.Identity,
     dataType: layer.Query.ObjectDataType,
     change: function(evt) {
-      var data = identityQuery.data.filter(function(identity) {
-        return identity.userId != client.userId;
-      });
-      store.dispatch(fetchUsersSuccess(data));
+      if (evt.type === 'data') {
+        window.layerSample.validateSetup(client);
+      }
     }
   });
 

@@ -68,7 +68,7 @@ sampleControllers.controller('appCtrl', function ($scope) {
       model: layer.Query.Identity,
       dataType: 'object',
       paginationWindow: 500,
-      change: function() {
+      change: function(evt) {
         // This query won't run until the client "ready" event has triggered;
         // and the query's "change" event won't trigger until it runs.
         // While it is not required to wait, we wait until Identities have loaded before we
@@ -78,6 +78,9 @@ sampleControllers.controller('appCtrl', function ($scope) {
           return user.id !== $scope.appCtrlState.client.user.id;
         });
         $scope.$digest();
+        if (evt.type === 'data') {
+          window.layerSample.validateSetup($scope.appCtrlState.client);
+        }
       }
     });
 
