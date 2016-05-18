@@ -115,10 +115,10 @@ module.exports = function(client) {
   });
   identityQuery.on('change', function(evt) {
     if (evt.type === 'data') {
-      validateSetup(evt);
+      window.layerSample.validateSetup(client);
     }
     participantView.users = identityQuery.data;
-    participantView.render();
+    renderAll(); // new Identities can affect rendering of many panels
   });
 
   /**
@@ -206,11 +206,7 @@ module.exports = function(client) {
     sendView.conversation = conversation;
 
     typingPublisher.setConversation(conversation);
-
-    conversationsView.render();
-    messagesView.render();
-    titlebarView.render();
-    sendView.render();
+    renderAll();
     participantView.hide();
   });
 
@@ -228,18 +224,15 @@ module.exports = function(client) {
     announcementsView.show();
   });
 
-  if (window.location.hash) Backbone.history.loadUrl(Backbone.history.fragment);
-
-  function validateSetup(evt) {
-    var missing = false;
-    for (var i = 0; i <= 5; i++) {
-      if (!client.getIdentity(String(i))) missing = true;
-    }
-    if (missing) {
-      alert('Your app does not appear to have the expected users setup; see the README.md file which contains instructions for setting up these users');
-    }
+  function renderAll() {
+    conversationsView.render();
+    messagesView.render();
+    titlebarView.render();
+    sendView.render();
+    participantView.render();
   }
 
+  if (window.location.hash) Backbone.history.loadUrl(Backbone.history.fragment);
 };
 
 Backbone.history.start();

@@ -14,6 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
   window.layerSample = {
     appId: null,
     userId: null,
+    validateSetup: function(client) {
+      var missing = false;
+      for (var i = 0; i <= 5; i++) {
+        if (!client.getIdentity(String(i))) missing = true;
+      }
+      if (missing) {
+        alert('Your app does not appear to have the expected users setup; see the README.md file which contains instructions for setting up these users');
+      }
+    },
     challenge: function(nonce, callback) {
       layer.xhr({
         url: 'https://layer-identity-provider.herokuapp.com/identity_tokens',
