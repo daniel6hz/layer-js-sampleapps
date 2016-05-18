@@ -12,7 +12,7 @@ import { fetchUsersSuccess } from './actions/messenger';
 import { IndexRoute, Route } from 'react-router';
 import { ReduxRouter } from 'redux-router';
 
-var client;
+let client;
 /**
  * Wait for identity dialog message to complete
  */
