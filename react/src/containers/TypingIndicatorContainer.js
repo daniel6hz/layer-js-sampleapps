@@ -8,12 +8,12 @@ import { connectTypingIndicator } from 'layer-react';
 @connectTypingIndicator()
 export default class TypingIndicator extends Component {
 
-  getTypingText(users, typingIds) {
-    const userNames = typingIds.join(', ');
+  getTypingText(users) {
+    const userNames = users.map(user => user.displayName).join(', ');
 
-    if (typingIds.length == 1) {
+    if (users.length == 1) {
       return userNames + ' is typing.'
-    } else if (typingIds.length > 1) {
+    } else if (users.length > 1) {
       return userNames + ' are typing.'
     } else {
       return '';
@@ -21,7 +21,7 @@ export default class TypingIndicator extends Component {
   }
 
   render() {
-    const typingText = this.getTypingText(this.props.users, this.props.typing);
+    const typingText = this.getTypingText(this.props.typing);
 
     return (
       <div className='typing-indicator-panel'>{typingText}</div>

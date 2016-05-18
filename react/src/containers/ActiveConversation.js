@@ -80,7 +80,6 @@ export default class ActiveConversation extends Component {
           onLoadMoreMessages={loadMoreMessages}/>
 
         <TypingIndicatorContainer
-          users={users}
           conversationId={activeConversationId}/>
 
         <MessageComposer
