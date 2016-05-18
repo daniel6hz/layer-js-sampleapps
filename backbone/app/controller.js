@@ -113,7 +113,10 @@ module.exports = function(client) {
     });
     Backbone.$('.announcements-button').toggleClass('unread-announcements', unread.length > 0);
   });
-  identityQuery.on('change', function() {
+  identityQuery.on('change', function(evt) {
+    if (evt.type === 'data') {
+      validateSetup(evt);
+    }
     participantView.users = identityQuery.data;
     participantView.render();
   });
@@ -169,7 +172,6 @@ module.exports = function(client) {
   });
   sendView.on('conversation:create', function(text) {
     // See http://static.layer.com/sdk/docs/#!/api/layer.Conversation
-    debugger;
     var conversation = client.createConversation(newConversation);
     conversation.createMessage(text).send();
 
@@ -227,6 +229,17 @@ module.exports = function(client) {
   });
 
   if (window.location.hash) Backbone.history.loadUrl(Backbone.history.fragment);
+
+  function validateSetup(evt) {
+    var missing = false;
+    for (var i = 0; i <= 5; i++) {
+      if (!client.getIdentity(String(i))) missing = true;
+    }
+    if (missing) {
+      alert('Your app does not appear to have the expected users setup; see the README.md file which contains instructions for setting up these users');
+    }
+  }
+
 };
 
 Backbone.history.start();
