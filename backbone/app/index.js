@@ -39,9 +39,9 @@ window.addEventListener('message', function(evt) {
    * Client ready. Initialize controller.
    */
   client.once('ready', function() {
+    $('.left-panel .panel-header .title').text(client.user.displayName + '\'s Conversations');
     controller(client);
   });
 
   // Set conversations title
-  $('.left-panel .panel-header .title').text(window.layerSample.user + '\'s Conversations');
 }, false);
