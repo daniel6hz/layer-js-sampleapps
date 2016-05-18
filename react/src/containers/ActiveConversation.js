@@ -65,6 +65,7 @@ export default class ActiveConversation extends Component {
       <div className='right-panel'>
         <ConversationHeader
           title={title}
+          users={users}
           activeConversation={activeConversation}
           editingTitle={editingTitle}
           onEditConversationTitle={editConversationTitle}
