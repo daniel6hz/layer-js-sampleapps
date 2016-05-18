@@ -7,8 +7,11 @@ module.exports = Backbone.View.extend({
   render: function() {
     var text = '';
     if (this.typing.length > 0) {
-      var prefix = this.typing.length === 1 ? ' is' : ' are';
-      text = this.typing.join(', ') + prefix + ' typing...';
+      var names = this.typing.map(function(identity) {
+        return identity.displayName;
+      });
+      var prefix = names.length === 1 ? ' is' : ' are';
+      text = names.join(', ') + prefix + ' typing...';
     }
     this.$el.text(text);
   }
