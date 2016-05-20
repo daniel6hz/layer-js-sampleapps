@@ -453,8 +453,10 @@ div.avatar-image.cluster span:last-child {
 
 .message-item .bubble.quote {
   padding: 8px 12px;
-  color: #fff;
+  color: #000;
   font-style: italic;
+  background-color: rgba(240, 240, 240, 1.0);
+  border: solid 2px rgba(25, 165, 228, 1.0);
 }
 
 .message-item .bubble.quote:before {
