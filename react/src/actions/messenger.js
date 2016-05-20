@@ -18,6 +18,16 @@ export const ROUTER_DID_CHANGE = '@@reduxReactRouter/routerDidChange';
 export const DELETE_CONVERSATION = 'DELETE_CONVERSATION';
 export const SHOW_ANNOUNCEMENTS = 'SHOW_ANNOUNCEMENTS';
 export const HIDE_ANNOUNCEMENTS = 'HIDE_ANNOUNCEMENTS';
+export const OWNER_SET = 'OWNER_SET';
+
+export function ownerSet(owner) {
+  return {
+    type: OWNER_SET,
+    payload: {
+      owner
+    }
+  };
+}
 
 export function clientReady() {
   return {

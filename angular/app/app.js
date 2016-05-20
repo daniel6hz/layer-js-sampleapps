@@ -8,7 +8,6 @@ var app = angular.module('ChatApp', [
   'newConversationPanelControllers',
   'messageListControllers',
   'messageItemControllers',
-  'announcementControllers',
   'infinite-scroll',
   'ngRoute'
 ]);

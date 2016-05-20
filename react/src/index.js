@@ -8,7 +8,7 @@ import NewConversation from './containers/NewConversation';
 import ActiveConversation from './containers/ActiveConversation';
 import DefaultPanel from './components/DefaultPanel';
 import configureStore from './store/configureStore';
-import { fetchUsersSuccess } from './actions/messenger';
+import { ownerSet } from './actions/messenger';
 import { IndexRoute, Route } from 'react-router';
 import { ReduxRouter } from 'redux-router';
 
@@ -36,6 +36,10 @@ window.addEventListener('message', function(evt) {
    */
   client.once('challenge', e => {
     window.layerSample.challenge(e.nonce, e.callback);
+  });
+
+  client.on('ready', () => {
+    store.dispatch(ownerSet(client.user.toObject()));
   });
 
   /**

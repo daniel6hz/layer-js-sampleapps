@@ -55,6 +55,7 @@ export default class Messenger extends Component {
       <div className='messenger'>
         <div className='left-panel'>
           <ConversationListHeader
+            owner={app.owner}
             unreadAnnouncements={Boolean(announcements.filter(item => item.isUnread).length)}
             onShowAnnouncements={showAnnouncements}
             onNewConversation={newConversation}/>
