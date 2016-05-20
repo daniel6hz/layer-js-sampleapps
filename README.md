@@ -75,4 +75,3 @@ curl  -X POST \
       -H 'Content-Type: application/json' \
       -d '{"distinct": false, "participants": ["0","1","2","3","4","5"]}' \
       https://api.layer.com/apps/YOUR_APP_ID/conversations
-```
