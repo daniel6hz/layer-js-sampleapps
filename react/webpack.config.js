@@ -20,11 +20,6 @@ module.exports = {
   externals: {
     'layer-sdk': 'layer'
   },
-  resolve: {
-    alias: {
-      'layer-react': path.join(__dirname, 'layer-react')
-    }
-  },
   module: {
     loaders: [{
       test: /\.js$/,

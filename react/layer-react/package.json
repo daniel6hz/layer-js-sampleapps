@@ -1,6 +1,0 @@
-{
-  "name": "layer-react",
-  "version": "0.1.0",
-  "description": "Layer React is the glue between your React App and the Layer Javascript SDK.",
-  "main": "./src/index.js"
-}
