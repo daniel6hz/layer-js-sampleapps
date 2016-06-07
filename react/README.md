@@ -2,6 +2,8 @@
 
 This is a simple example on how one would use the Layer Web SDK with the [ReactJS](https://reactjs.org) framework.
 
+It depends on [layer-react](https://github.com/layerhq/layer-react) library which provides an interface to subscribe to both local and remote changes in message and conversation objects.
+
 ### Installation
 
 To install all dependencies and build this project use the following command:
