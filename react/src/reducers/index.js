@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   app: appReducer,
   router: routerStateReducer,
   activeConversation: activeConversationReducer,
-  newConversation: newConversationReducer,
+  newConversationState: newConversationReducer,
   announcementState: announcementReducer,
 });
 

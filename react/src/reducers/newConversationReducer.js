@@ -24,14 +24,14 @@ export default function newConversationReducer(state = initialState, action) {
         ...state,
         participants: [
           ...state.participants,
-          payload.userId
+          payload.user
         ]
       };
     case REMOVE_PARTICIPANT:
       return {
         ...state,
-        participants: state.participants.filter((participantId) => {
-          return participantId !== payload.userId;
+        participants: state.participants.filter((participant) => {
+          return participant.id !== payload.user.id;
         })
       };
     case CHANGE_CONVERSATION_TITLE:

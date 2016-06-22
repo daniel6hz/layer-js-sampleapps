@@ -34,18 +34,6 @@ controllers.controller('conversationListCtrl', function ($scope, $rootScope) {
     $rootScope.$digest();
   });
 
-
-  /**
-   * Utility for rendering all users in a Conversation.
-   */
-  $scope.getConversationIdentities = function(conversationObject) {
-    return conversationObject.participants.map(function(participant) {
-      return $scope.appCtrlState.client.getIdentity(participant);
-    }).filter(function(identity) {
-      return identity;
-    });
-  };
-
   /**
    * This deletes a Conversation from the server.
    */

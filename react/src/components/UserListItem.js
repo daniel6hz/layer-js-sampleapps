@@ -8,12 +8,12 @@ import Avatar from './Avatar';
  */
 export default class UserListItem extends Component {
   handleClick = () => {
-    const userId = this.props.user.userId;
+    const user = this.props.user;
 
     if (this.props.selected) {
-      this.props.onUserUnselected(userId);
+      this.props.onUserUnselected(user);
     } else {
-      this.props.onUserSelected(userId);
+      this.props.onUserSelected(user);
     }
   }
 

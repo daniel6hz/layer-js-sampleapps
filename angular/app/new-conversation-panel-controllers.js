@@ -41,9 +41,7 @@ controllers.controller('newConversationCtrl', function($scope) {
    */
   $scope.send = function() {
     // Get the userIds of all selected users
-    var participants = getSelectedUsers().map(function(user) {
-      return user.userId;
-    });
+    var participants = getSelectedUsers();
 
     if (participants.length) {
       var metadata = {};

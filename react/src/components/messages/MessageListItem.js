@@ -41,7 +41,7 @@ export default class MessageListItem extends Component {
   }
 
   render() {
-    const { message, users } = this.props;
+    const { message } = this.props;
     const user = message.sender;
     const messageStatus = this.getMessageStatus(message);
 

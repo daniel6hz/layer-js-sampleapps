@@ -41,7 +41,6 @@ export default class ActiveConversation extends Component {
       activeConversationId,
       conversations,
       messages,
-      users,
       actions
     } = this.props;
     const {
@@ -65,7 +64,6 @@ export default class ActiveConversation extends Component {
       <div className='right-panel'>
         <ConversationHeader
           title={title}
-          users={users}
           activeConversation={activeConversation}
           editingTitle={editingTitle}
           onEditConversationTitle={editConversationTitle}
@@ -75,7 +73,6 @@ export default class ActiveConversation extends Component {
 
         <MessageList
           messages={messages}
-          users={users}
           onMarkMessageRead={markMessageRead}
           onLoadMoreMessages={loadMoreMessages}/>
 

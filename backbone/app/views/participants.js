@@ -27,7 +27,7 @@ module.exports = Backbone.View.extend({
           '<div class="info">' +
             '<div class="main">' +
               '<span class="title">' + user.displayName + '</span>' +
-              '<input id="' + user.userId + '" type="checkbox" name="userList"/>' +
+              '<input id="' + user.user.id + '" type="checkbox" name="userList"/>' +
             '</div>' +
           '</div>' +
         '</label>');

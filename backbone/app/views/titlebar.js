@@ -28,11 +28,9 @@ module.exports = Backbone.View.extend({
     else if (this.conversation) {
       var title = this.conversation.metadata.title;
       if (!title) {
-        title = this.conversation.participants.map(function(userId) {
-          var user = this.conversation.getClient().getIdentity(userId);
-          return user ? user.displayName : '';
+        title = this.conversation.participants.map(function(user) {
+          return user.displayName;
         }, this)
-        .filter(function(user) { return user; }) // filter out missing identities
         .join(', ').replace(/(.*),(.*?)/, '$1 and$2');
       }
       html = '<div class="title-inner">' + title +

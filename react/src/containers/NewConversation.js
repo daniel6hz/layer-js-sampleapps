@@ -8,25 +8,18 @@ import MessageComposer from '../components/MessageComposer';
 import { QueryBuilder } from 'layer-sdk';
 import { connectQuery } from 'layer-react';
 
-function mapStateToProps({ newConversation }) {
-  return { newConversation };
+function mapStateToProps({ newConversationState }) {
+  return { newConversationState };
 }
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(MessengerActions, dispatch) };
 }
 
-function getQueries({ activeConversationId, messagePagination }) {
-  return {
-    users: QueryBuilder.identities()
-  };
-}
-
 @connectRedux(mapStateToProps, mapDispatchToProps)
-@connectQuery({}, getQueries)
 export default class NewConversation extends Component {
   render() {
-    const { newConversation, users, actions } = this.props;
+    const { newConversationState, users, actions } = this.props;
     const {
       changeConversationTitle,
       addParticipant,
@@ -34,7 +27,7 @@ export default class NewConversation extends Component {
       changeComposerMessage,
       submitComposerMessage
     } = actions;
-    const { title, participants, composerMessage } = newConversation;
+    const { title, participants, composerMessage } = newConversationState;
     const composerVisible = participants.length > 0;
     const selectedUsers = participants;
 

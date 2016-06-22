@@ -8,7 +8,6 @@ export default class ConversationList extends Component {
    */
   renderConversationListItem = (conversation) => {
     const {
-      users,
       activeConversationId,
       onDeleteConversation
     } = this.props;
@@ -17,7 +16,6 @@ export default class ConversationList extends Component {
       <ConversationListItem
         key={conversation.id}
         conversation={conversation}
-        users={users}
         active={activeConversationId === conversation.id}
         onDeleteConversation={onDeleteConversation} />
     );

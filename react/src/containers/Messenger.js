@@ -61,7 +61,6 @@ export default class Messenger extends Component {
             onNewConversation={newConversation}/>
           <ConversationList
             conversations={conversations}
-            users={users}
             activeConversationId={activeConversationId}
             onDeleteConversation={deleteConversation}/>
         </div>

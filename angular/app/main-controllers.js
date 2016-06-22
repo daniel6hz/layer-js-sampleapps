@@ -160,11 +160,8 @@ sampleControllers.controller('chatCtrl', function ($scope, $route, $location) {
       if (conversationObject.metadata.title) return conversationObject.metadata.title;
 
       // A join of all participants names is the backup title.
-      return conversationObject.participants.map(function(id) {
-        // Any data retrieve by our Identity Query (new-conversation-panel-controller.js)
-        // can be retrieved by calling client.getIdentity(id);
-        var identity = $scope.appCtrlState.client.getIdentity(id);
-        return identity ? identity.displayName : id;
+      return conversationObject.participants.map(function(identity) {
+        return identity.displayName;
       }).join(', ');
     }
     return '';

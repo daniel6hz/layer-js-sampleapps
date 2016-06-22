@@ -80,20 +80,20 @@ export function newConversation() {
   return pushState(null, '/new');
 }
 
-export function addParticipant(userId) {
+export function addParticipant(user) {
   return {
     type: ADD_PARTICIPANT,
     payload: {
-      userId
+      user
     }
   };
 }
 
-export function removeParticipant(userId) {
+export function removeParticipant(user) {
   return {
     type: REMOVE_PARTICIPANT,
     payload: {
-      userId
+      user
     }
   };
 }

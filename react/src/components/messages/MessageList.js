@@ -53,13 +53,12 @@ export default class MessageList extends Component {
   }
 
   renderMessageItem = (message) => {
-    const { users, onMarkMessageRead } = this.props;
+    const { onMarkMessageRead } = this.props;
 
     return (
       <MessageListItem
         key={message.id}
         message={message}
-        users={users}
         onMarkMessageRead={onMarkMessageRead}/>
     );
   }

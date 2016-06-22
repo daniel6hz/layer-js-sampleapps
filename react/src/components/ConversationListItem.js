@@ -17,12 +17,8 @@ export default class ConversationListItem extends Component {
   }
 
   render() {
-    const { conversation, users, active, deleteConversation } = this.props;
-    const participantUsers = conversation.participants.map(function(userId) {
-      return users.filter(function(user) {return user.userId === userId})[0];
-    }).filter(function(user) {
-      return user;
-    });
+    const { conversation, active, deleteConversation } = this.props;
+    const participantUsers = conversation.participants.filter(user => !user.sessionOwner);
     const conversationUrl = `/conversations/${toUUID(conversation.id)}`;
 
     const styles = cx({

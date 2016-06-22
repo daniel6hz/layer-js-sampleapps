@@ -18,19 +18,15 @@ module.exports = Backbone.View.extend({
       var unread = conversation.unreadCount !== 0 ? 'unread-messages ' : '';
       var participants = conversation.participants;
       var client = conversation.getClient();
-      var users = participants.map(function(participant) {
-        return client.getIdentity(participant);
-      }).filter(function(user) {
-        return user;
-      });
-      var title = conversation.metadata.title || users.map(function(user) {
+
+      var title = conversation.metadata.title || participants.map(function(user) {
         return user.displayName;
       });
 
       var selectedClass = '';
       if (this.conversation && conversation.id === this.conversation.id) selectedClass = 'selected-conversation';
 
-      var avatars = users.map(function(user) {
+      var avatars = participants.map(function(user) {
         return '<span><img src="' + user.avatarUrl + '" /></span>';
       });
       var cluster = avatars.length > 1 ? 'cluster' : '';
